@@ -7,56 +7,79 @@ const CRM_FORM_NAME = import.meta.env.CRM_FORM_NAME || 'Брокер за 1 де
 
 /**
  * Receives the "Запази място" form and forwards it to SkyGuru CRM
- * (same public leads endpoint the other Home2U campaigns use).
+ * (public leads endpoint, no auth — only `phone` is required there;
+ * all other fields are accepted and optional).
  *
- * CRM schema: name, phone (required), email, form,
- * utm_source/medium/campaign/term/content, gclid, fbclid.
+ * Payload mirrors the proven Webinar integration: flat keys (Laravel reads
+ * individual inputs), `form` feeds SkyGuru's native "Форма" field with
+ * `form_name` as a custom-field fallback, plus ad attribution passthrough
+ * (fbclid/fbc/fbp, utm_*, landing_page, captured_at).
  */
 export const POST: APIRoute = async ({ request }) => {
-  let body: Record<string, string>;
+  let body: Record<string, unknown>;
   try {
     body = await request.json();
   } catch {
     return json({ ok: false, error: 'Invalid JSON body' }, 400);
   }
 
-  const name = (body.name || '').trim();
-  const phone = (body.phone || '').trim();
-  const email = (body.email || '').trim();
-  const message = (body.message || '').trim();
+  const trim = (v: unknown): string | undefined =>
+    typeof v === 'string' && v.trim() ? v.trim() : undefined;
+
+  const name = trim(body.name);
+  const phone = trim(body.phone);
+  const email = trim(body.email);
 
   if (!name || !phone || !email) {
     return json({ ok: false, error: 'Missing required fields' }, 422);
   }
 
-  // UTM/click-id passthrough — attribution fields are sent flat by the form,
-  // with a fallback parse of the page URL the form was submitted on.
-  const utm: Record<string, string> = {};
-  const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'];
-  for (const key of UTM_KEYS) {
-    if (body[key]) utm[key] = body[key];
-  }
+  const payload: Record<string, unknown> = {
+    name,
+    phone,
+    email,
+    consent: true, // the form cannot be submitted without the consent checkbox
+    message: trim(body.message),
+    form: CRM_FORM_NAME,
+    form_name: CRM_FORM_NAME,
+    source: 'home2u-broker-za-1-den',
+    // ad attribution / tracking (sent flat by the form's h2u_attribution capture)
+    fbclid: trim(body.fbclid),
+    fbc: trim(body.fbc),
+    fbp: trim(body.fbp),
+    gclid: trim(body.gclid),
+    utm_source: trim(body.utm_source),
+    utm_medium: trim(body.utm_medium),
+    utm_campaign: trim(body.utm_campaign),
+    utm_term: trim(body.utm_term),
+    utm_content: trim(body.utm_content),
+    landing_page: trim(body.landing_page) ?? trim(body.page),
+    captured_at: trim(body.captured_at),
+  };
+
+  // Fallback: parse UTM / click ids from the page URL the form was submitted on.
   try {
-    const pageUrl = new URL(body.page || '');
-    for (const key of UTM_KEYS) {
-      const value = pageUrl.searchParams.get(key);
-      if (value && !utm[key]) utm[key] = value;
+    const pageUrl = new URL(typeof body.page === 'string' ? body.page : '');
+    for (const key of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid']) {
+      if (!payload[key]) {
+        const value = pageUrl.searchParams.get(key);
+        if (value) payload[key] = value;
+      }
     }
   } catch {
-    /* no page URL — skip UTM passthrough */
+    /* no page URL — skip UTM fallback */
+  }
+
+  // Drop empty values so we don't send a wall of nulls.
+  for (const key of Object.keys(payload)) {
+    const value = payload[key];
+    if (value === undefined || value === null || value === '') delete payload[key];
   }
 
   const crmResponse = await fetch(CRM_ENDPOINT, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify({
-      name,
-      phone,
-      email,
-      form: CRM_FORM_NAME,
-      ...(message ? { message } : {}),
-      ...utm,
-    }),
+    body: JSON.stringify(payload),
   });
 
   if (!crmResponse.ok) {
