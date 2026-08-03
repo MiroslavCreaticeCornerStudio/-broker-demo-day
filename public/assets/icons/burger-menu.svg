@@ -1,0 +1,17 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="35.3023" height="33" viewBox="0 0 35.3023 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Burger Menu">
+<foreignObject x="-40" y="-40" width="115.302" height="113"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(20px);clip-path:url(#bgblur_0_0_78_clip_path);height:100%;width:100%"></div></foreignObject><path id="BG" data-figma-bg-blur-radius="40" d="M3.83691 0.5H31.4648C33.3078 0.5 34.8026 1.99396 34.8027 3.83691V29.1631C34.8026 31.006 33.3078 32.5 31.4648 32.5H3.83691C1.99406 32.4998 0.500159 31.0059 0.5 29.1631V3.83691C0.50016 1.99406 1.99406 0.50016 3.83691 0.5Z" fill="url(#paint0_linear_0_78)" stroke="#A90831"/>
+<g id="Menu Icon">
+<path id="Menu Line" d="M9.97674 10.3605C9.97674 9.7247 10.4921 9.2093 11.1279 9.2093H24.1744C24.8102 9.2093 25.3256 9.7247 25.3256 10.3605V10.3605C25.3256 10.9962 24.8102 11.5116 24.1744 11.5116H11.1279C10.4921 11.5116 9.97674 10.9962 9.97674 10.3605V10.3605Z" fill="#A90831"/>
+<path id="Path 176" d="M13.9893 15.4979H23.9834C24.5354 15.4979 24.9828 15.9454 24.9828 16.4973C24.9828 17.0493 24.5354 17.4968 23.9834 17.4968H13.9893C13.4374 17.4968 12.9899 17.0493 12.9899 16.4973C12.9899 15.9454 13.4374 15.4979 13.9893 15.4979Z" fill="#A90831"/>
+<path id="Menu Line_2" d="M9.97672 22.6395C9.97672 22.0037 10.4921 21.4883 11.1279 21.4883H24.1744C24.8102 21.4883 25.3256 22.0037 25.3256 22.6395V22.6395C25.3256 23.2753 24.8102 23.7906 24.1744 23.7906H11.1279C10.4921 23.7906 9.97672 23.2753 9.97672 22.6395V22.6395Z" fill="#A90831"/>
+</g>
+</g>
+<defs>
+<clipPath id="bgblur_0_0_78_clip_path" transform="translate(40 40)"><path d="M3.83691 0.5H31.4648C33.3078 0.5 34.8026 1.99396 34.8027 3.83691V29.1631C34.8026 31.006 33.3078 32.5 31.4648 32.5H3.83691C1.99406 32.4998 0.500159 31.0059 0.5 29.1631V3.83691C0.50016 1.99406 1.99406 0.50016 3.83691 0.5Z"/>
+</clipPath><linearGradient id="paint0_linear_0_78" x1="34.6823" y1="32.5837" x2="0.539132" y2="32.5837" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.4"/>
+<stop offset="1" stop-color="white" stop-opacity="0.0509804"/>
+</linearGradient>
+</defs>
+</svg>

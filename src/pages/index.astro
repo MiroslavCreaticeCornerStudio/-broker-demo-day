@@ -1,0 +1,88 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import WhatYouGet from "../components/WhatYouGet.astro";
+import WhoIsItFor from "../components/WhoIsItFor.astro";
+import WhyHome2U from "../components/WhyHome2U.astro";
+import MoreAboutUs from "../components/MoreAboutUs.astro";
+import FinalCta from "../components/FinalCta.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout>
+  <script
+    slot="head"
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "Home2U Real Estate",
+      url: "https://home2u.bg",
+      logo: new URL("/assets/icons/logo-icon.svg", Astro.site ?? Astro.url).href,
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+359 887 88333222",
+        email: "info@home2u.com",
+        contactType: "recruitment",
+        availableLanguage: "Bulgarian",
+      },
+    })}
+  />
+  <Hero />
+
+  <main id="main">
+    <WhatYouGet />
+
+    <!-- Soft city-photo wash behind the middle sections (Figma 3253:8630) -->
+    <div class="wash-zone">
+      <div class="wash-zone__bg" aria-hidden="true">
+        <img src="/assets/images/bg-city.jpg" alt="" width="1920" height="1083" loading="lazy" />
+      </div>
+      <WhoIsItFor />
+      <WhyHome2U />
+      <MoreAboutUs />
+    </div>
+
+    <FinalCta />
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .wash-zone {
+    position: relative;
+  }
+
+  .wash-zone__bg {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 18%;
+    height: 68%;
+    opacity: 0.6;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wash-zone__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 30% center;
+  }
+
+  .wash-zone__bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-wash);
+  }
+
+  .wash-zone :global(section) {
+    position: relative;
+    z-index: 1;
+  }
+</style>

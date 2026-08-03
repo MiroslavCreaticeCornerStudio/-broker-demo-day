@@ -1,0 +1,155 @@
+---
+import "../styles/global.css";
+
+export interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonical?: string;
+}
+
+const {
+  title = "Стани брокер за 1 ден | Home2U",
+  description =
+    "Разбери дали професията брокер е за теб, преди да вземеш решение. Прекарай един ден с екипа на Home2U, виж как протича работата и усети атмосферата отвътре.",
+  ogImage = "/assets/images/office-2.jpg",
+  canonical,
+} = Astro.props;
+
+const canonicalURL = canonical ?? new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
+const ogImageURL = new URL(ogImage, Astro.site ?? Astro.url).href;
+---
+
+<!doctype html>
+<html lang="bg">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:locale" content="bg_BG" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <!-- Fonts: self-hosted Sharp Grotesk Cyr -->
+    <link rel="preload" href="/assets/fonts/SharpGroteskCyrMedium-20.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/SharpGroteskCyrBook-20.woff2" as="font" type="font/woff2" crossorigin />
+
+    <slot name="head" />
+
+    <!-- Enable scroll-reveal pre-hide before paint (skipped for reduced motion;
+         self-clears after 2.5s if GSAP fails to load, so content is never stuck hidden). -->
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        if (location.search.indexOf("noanim") !== -1) return; // QA escape hatch
+        if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        d.classList.add("gsap-on");
+        setTimeout(function () { if (!window.gsap) d.classList.remove("gsap-on"); }, 2500);
+      })();
+    </script>
+
+    <!-- Ad attribution capture (Facebook fbclid + UTMs) for offline conversion tracking.
+         Persists last-touch attribution in localStorage so it survives navigation and
+         is attached to the lead on form submit. -->
+    <script is:inline>
+      (function () {
+        try {
+          var KEY = "h2u_attribution";
+          var TRACKED = ["fbclid", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
+          var params = new URLSearchParams(location.search);
+          var hasNew = TRACKED.some(function (p) { return params.get(p); });
+
+          function readCookie(name) {
+            var m = document.cookie.match("(?:^|; )" + name.replace(/([.*+?^${}()|[\]\\])/g, "\\$1") + "=([^;]*)");
+            return m ? decodeURIComponent(m[1]) : "";
+          }
+
+          var data = {};
+          try { data = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
+
+          if (hasNew) {
+            // New ad click → refresh attribution (last-touch wins)
+            var fresh = {};
+            TRACKED.forEach(function (p) { var v = params.get(p); if (v) fresh[p] = v; });
+            fresh.landing_page = location.origin + location.pathname;
+            fresh.referrer = document.referrer || "";
+            fresh.captured_at = new Date().toISOString();
+            if (fresh.fbclid) fresh.fbc = "fb.1." + Date.now() + "." + fresh.fbclid; // Meta CAPI format
+            data = fresh;
+          }
+
+          // Prefer Meta Pixel cookies when present (better match quality)
+          var fbp = readCookie("_fbp"); if (fbp) data.fbp = fbp;
+          var fbc = readCookie("_fbc"); if (fbc) data.fbc = fbc;
+
+          if (hasNew || fbp || fbc) localStorage.setItem(KEY, JSON.stringify(data));
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <a href="#main" class="sr-only">Към съдържанието</a>
+    <slot />
+
+    <!-- GSAP scroll-reveal animations (CDN globals → must be is:inline in Astro) -->
+    <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        if (!window.gsap || !window.ScrollTrigger || !root.classList.contains("gsap-on")) {
+          root.classList.remove("gsap-on"); // reveal everything if we can't animate
+          return;
+        }
+        gsap.registerPlugin(ScrollTrigger);
+        var EASE = "power2.out", DUR = 0.8;
+
+        // Hero — soft fade-up entrance on load
+        var heroEls = gsap.utils.toArray(".hero__title, .hero__lead, .hero__subtext, .hero__cta");
+        if (heroEls.length) {
+          gsap.set(heroEls, { y: 24 });
+          gsap.to(heroEls, { opacity: 1, y: 0, duration: DUR, ease: EASE, stagger: 0.12, delay: 0.05 });
+        }
+
+        // Below the fold — reveal each group as it scrolls in (batched stagger, once)
+        var revealEls = gsap.utils.toArray(
+          ".experience__header, .experience__card, .who__content, .who__media, " +
+          ".why__media, .why__content, .benefits__item, .final-cta__info, .final-cta__form"
+        );
+        if (revealEls.length) {
+          gsap.set(revealEls, { y: 24 });
+          ScrollTrigger.batch(revealEls, {
+            start: "top 85%",
+            once: true,
+            onEnter: function (batch) {
+              gsap.to(batch, { opacity: 1, y: 0, duration: DUR, ease: EASE, stagger: 0.1, overwrite: true });
+            }
+          });
+        }
+
+        // Recalc trigger positions once fonts/images settle
+        if (document.fonts && document.fonts.ready) {
+          document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
+        }
+        window.addEventListener("load", function () { ScrollTrigger.refresh(); });
+      })();
+    </script>
+  </body>
+</html>

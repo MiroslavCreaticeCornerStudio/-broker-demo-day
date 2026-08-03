@@ -1,0 +1,280 @@
+---
+// Футър — лого, описание, връзки, контакти и червена лента (Figma 3253:8824 / 3253:9151).
+const year = new Date().getFullYear();
+const navLinks = [
+  { href: "#prezhivyavane", label: "Какво ще преживееш" },
+  { href: "#za-kogo", label: "За кого е подходящо" },
+  { href: "#za-nas", label: "За нас" },
+];
+---
+
+<footer class="footer">
+  <div class="footer__inner container container--padded">
+    <div class="footer__brand">
+      <a class="footer__logo" href="#top" aria-label="Home2U — начало">
+        <img src="/assets/icons/logo-icon.svg" alt="" width="31" height="31" loading="lazy" />
+        <img src="/assets/icons/logo-text.svg" alt="Home2U" width="129" height="31" loading="lazy" />
+      </a>
+      <p class="footer__description">
+        Home2U обединява група от компании, заемащи водещи позиция във всички
+        сегменти на бизнеса с недвижими имоти.
+      </p>
+    </div>
+
+    <div class="footer__columns">
+      <nav class="footer__column footer__column--links" aria-label="Кариери">
+        <h2 class="footer__column-title">Кариери</h2>
+        <ul class="footer__nav">
+          {navLinks.map((link) => (
+            <li><a class="footer__nav-link" href={link.href}>{link.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <div class="footer__column footer__column--contacts">
+        <h2 class="footer__column-title">Контакти</h2>
+        <ul class="footer__contacts">
+          <li>
+            <a class="footer__contact" href="tel:+35988788333222">
+              <img src="/assets/icons/icon-phone.svg" alt="" width="14" height="14" loading="lazy" />
+              <span>+359 887 88333222</span>
+            </a>
+          </li>
+          <li>
+            <a class="footer__contact" href="mailto:info@home2u.com">
+              <img src="/assets/icons/icon-email.svg" alt="" width="16" height="14" loading="lazy" />
+              <span>info@home2u.com</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer__bar">
+    <div class="footer__bar-inner container container--padded">
+      <div class="footer__legal">
+        <a class="footer__legal-link" href="/privacy">Защита на личните данни</a>
+        <span class="footer__legal-separator" aria-hidden="true">|</span>
+        <a class="footer__legal-link" href="/zzlpspoin">Информация по ЗЗЛПСПООИН</a>
+      </div>
+      <p class="footer__copyright">„Home2U Real Estate“, {year}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    width: 100%;
+  }
+
+  .footer__inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 3em;
+    padding-top: 4em;    /* 64px */
+    padding-bottom: 3.75em;
+  }
+
+  .footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em; /* 24px */
+    width: 20.25em; /* 324px */
+    flex-shrink: 0;
+  }
+
+  .footer__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    width: fit-content;
+  }
+
+  .footer__logo img {
+    height: 1.9375em; /* 31px */
+    width: auto;
+  }
+
+  .footer__description {
+    font-size: 0.875em; /* 14px */
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+  }
+
+  .footer__columns {
+    display: flex;
+    justify-content: space-between;
+    gap: 3em;
+    width: 50.4375em; /* 807px */
+  }
+
+  .footer__column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6875em; /* 27px */
+  }
+
+  .footer__column--contacts {
+    width: 15.8125em; /* 253px */
+    flex-shrink: 0;
+  }
+
+  .footer__column-title {
+    padding-bottom: 0.5em; /* 9px */
+    border-bottom: 1px solid #c6c6c6;
+    font-size: 1.125em; /* 18px */
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--color-heading);
+  }
+
+  .footer__nav {
+    display: flex;
+    gap: 2.5em; /* 40px */
+  }
+
+  .footer__nav-link {
+    font-size: 0.875em; /* 14px */
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    transition: color var(--transition-base);
+  }
+
+  .footer__nav-link:hover {
+    color: var(--color-primary);
+  }
+
+  .footer__contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 1.125em; /* 18px */
+  }
+
+  .footer__contact {
+    display: flex;
+    align-items: center;
+    gap: 0.84em; /* 13.5px */
+    font-size: 0.875em; /* 14px */
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--color-text-secondary);
+    transition: color var(--transition-base);
+  }
+
+  .footer__contact:hover {
+    color: var(--color-primary);
+  }
+
+  .footer__contact img {
+    width: 1em;
+    height: auto;
+    flex-shrink: 0;
+  }
+
+  /* --- Red bottom bar --- */
+  .footer__bar {
+    width: 100%;
+    background: var(--color-primary);
+    color: var(--color-text-white);
+  }
+
+  .footer__bar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+    min-height: 2.75em; /* 44px */
+    padding-block: 0.8125em; /* 13px */
+  }
+
+  .footer__legal {
+    display: flex;
+    align-items: center;
+    gap: 1em; /* 16px */
+    font-size: 0.875em; /* 14px */
+    line-height: 1.3;
+  }
+
+  .footer__legal-link {
+    text-decoration: underline;
+    transition: opacity var(--transition-base);
+  }
+
+  .footer__legal-link:hover {
+    opacity: 0.8;
+  }
+
+  .footer__copyright {
+    font-size: 0.875em; /* 14px */
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+
+  /* ---------------------------------------------------------------- */
+  @media screen and (max-width: 991px) {
+    .footer__inner {
+      flex-direction: column;
+      gap: 1.75em; /* 28px */
+      padding-top: 2em;   /* 32px */
+      padding-bottom: 1.75em;
+    }
+
+    .footer__brand {
+      width: 100%;
+      gap: 1.25em; /* 20px */
+    }
+
+    .footer__columns {
+      flex-direction: column;
+      width: 100%;
+      gap: 1.75em;
+    }
+
+    .footer__column {
+      gap: 1.25em; /* 20px */
+    }
+
+    .footer__column--contacts {
+      width: 100%;
+      order: -1; /* contacts right under the logo, per the mobile frame */
+    }
+
+    .footer__column--contacts .footer__column-title {
+      display: none;
+    }
+
+    .footer__nav {
+      flex-direction: column;
+      gap: 1em; /* 16px */
+    }
+
+    .footer__contact {
+      color: var(--color-heading);
+    }
+
+    .footer__bar-inner {
+      flex-direction: column;
+      gap: 1em;
+      text-align: center;
+      padding-block: 0.75em; /* 12px */
+    }
+
+    .footer__legal {
+      flex-direction: column;
+      gap: 0.33em; /* 4px */
+      font-size: 0.75em; /* 12px */
+    }
+
+    .footer__legal-separator {
+      transform: rotate(90deg);
+    }
+
+    .footer__copyright {
+      font-size: 0.75em; /* 12px */
+    }
+  }
+</style>

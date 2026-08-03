@@ -1,0 +1,545 @@
+---
+// Hero — full-viewport-width section with layered photo/gradient background,
+// navbar, headline column and the decorative team-photo cluster (Figma 3335:12114 / 3253:8889).
+const navLinks = [
+  { href: "#prezhivyavane", label: "Какво ще преживееш" },
+  { href: "#za-kogo", label: "За кого е подходящо" },
+  { href: "#za-nas", label: "За нас" },
+];
+---
+
+<header class="hero" id="top">
+  <div class="hero__bg" aria-hidden="true">
+    <img class="hero__bg-photo hero__bg-photo--a" src="/assets/images/hero-bg-a.jpg" alt="" width="3580" height="1008" fetchpriority="high" />
+    <div class="hero__bg-gradient"></div>
+    <img class="hero__bg-photo hero__bg-photo--b" src="/assets/images/hero-bg-b.png" alt="" width="2800" height="788" fetchpriority="high" />
+    <div class="hero__bg-fade"></div>
+  </div>
+
+  <nav class="nav" aria-label="Основна навигация">
+    <a class="nav__logo" href="#top" aria-label="Home2U — начало">
+      <img src="/assets/icons/logo-icon.svg" alt="" width="35" height="35" />
+      <img class="nav__logo-text" src="/assets/icons/logo-text.svg" alt="Home2U" width="145" height="35" />
+    </a>
+
+    <ul class="nav__links">
+      {navLinks.map((link) => (
+        <li><a class="nav__link" href={link.href}>{link.label}</a></li>
+      ))}
+    </ul>
+
+    <a class="nav__cta btn-outline" href="#zapazi">Запази място</a>
+
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Отвори менюто">
+      <img src="/assets/icons/burger-menu.svg" alt="" width="35" height="33" />
+    </button>
+  </nav>
+
+  <div class="nav-menu" id="mobile-menu" hidden>
+    <ul class="nav-menu__links">
+      {navLinks.map((link) => (
+        <li><a class="nav-menu__link" href={link.href}>{link.label}</a></li>
+      ))}
+    </ul>
+    <a class="nav-menu__cta btn" href="#zapazi">Запази място</a>
+  </div>
+
+  <div class="hero__inner container">
+    <div class="hero__content">
+      <h1 class="hero__title">
+        <span class="hero__title-dark">Стани брокер</span>
+        <span class="hero__title-red">за 1 ден</span>
+        <span class="hero__scribble" aria-hidden="true">
+          <img src="/assets/icons/hero-scribble.svg" alt="" width="45" height="374" />
+        </span>
+      </h1>
+
+      <div class="hero__text">
+        <p class="hero__lead">Разбери дали професията е за теб, преди да вземеш решение.</p>
+        <p class="hero__subtext">
+          Прекарай един ден с екипа на Home2U, виж как протича работата, задай
+          всички въпроси, които те интересуват, и усети атмосферата отвътре.
+        </p>
+      </div>
+
+      <a class="hero__cta btn" href="#zapazi">Запази своето място</a>
+    </div>
+
+    <div class="hero__decor" aria-hidden="true">
+      <span class="hero__ellipse">
+        <img src="/assets/images/hero-ellipse.svg" alt="" width="228" height="212" />
+      </span>
+      <span class="hero__team">
+        <img src="/assets/images/hero-team.png" alt="" width="3580" height="1008" />
+      </span>
+      <span class="hero__arrow">
+        <img src="/assets/icons/hero-arrow.svg" alt="" width="97" height="81" />
+      </span>
+      <span class="hero__badge glass-card">Тук може да си ти!</span>
+      <span class="hero__sparkles">
+        <img src="/assets/icons/hero-sparkles.svg" alt="" width="66" height="37" />
+      </span>
+    </div>
+  </div>
+</header>
+
+<script>
+  const burger = document.querySelector<HTMLButtonElement>(".nav__burger");
+  const menu = document.querySelector<HTMLElement>(".nav-menu");
+  if (burger && menu) {
+    const close = () => {
+      burger.setAttribute("aria-expanded", "false");
+      burger.setAttribute("aria-label", "Отвори менюто");
+      menu.hidden = true;
+    };
+    burger.addEventListener("click", () => {
+      const open = burger.getAttribute("aria-expanded") === "true";
+      if (open) {
+        close();
+      } else {
+        burger.setAttribute("aria-expanded", "true");
+        burger.setAttribute("aria-label", "Затвори менюто");
+        menu.hidden = false;
+      }
+    });
+    menu.addEventListener("click", (e) => {
+      if ((e.target as HTMLElement).closest("a")) close();
+    });
+  }
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 49.0625em; /* 785px */
+    overflow: clip;
+  }
+
+  /* --- Background layers --- */
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero__bg-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 17% top;
+  }
+
+  .hero__bg-gradient {
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-hero);
+  }
+
+  .hero__bg-fade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 13.6%);
+  }
+
+  /* --- Navbar --- */
+  .nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4.375em; /* 70px */
+    padding-top: 1.25em;
+    padding-inline: var(--container-padding);
+    max-width: var(--size-container);
+    margin-inline: auto;
+  }
+
+  .nav__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65em;
+  }
+
+  .nav__logo img {
+    height: 2.1875em; /* 35px */
+    width: auto;
+  }
+
+  .nav__links {
+    display: flex;
+    gap: 2.5em; /* 40px */
+  }
+
+  .nav__link {
+    font-size: 0.875em; /* 14px */
+    font-weight: 500;
+    color: var(--color-heading);
+    line-height: 3.125em;
+    transition: color var(--transition-base);
+  }
+
+  .nav__link:hover {
+    color: var(--color-primary);
+  }
+
+  .nav__burger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25em;
+  }
+
+  .nav__burger img {
+    width: 2.2em;
+    height: auto;
+  }
+
+  /* --- Mobile dropdown menu --- */
+  .nav-menu[hidden] {
+    display: none;
+  }
+
+  .nav-menu {
+    position: absolute;
+    top: 4.5em;
+    left: var(--container-padding);
+    right: var(--container-padding);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    padding: 1.5em;
+    border: 1px solid #ffffff;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.85);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-card);
+  }
+
+  .nav-menu__links {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  .nav-menu__link {
+    display: block;
+    padding: 0.75em 0; /* comfortable ≥44px touch target */
+    font-size: 1em;
+    font-weight: 500;
+    color: var(--color-heading);
+  }
+
+  .nav-menu__cta {
+    width: 100%;
+  }
+
+  /* --- Content column --- */
+  .hero__inner {
+    position: relative;
+    height: 100%;
+  }
+
+  .hero__content {
+    position: absolute;
+    top: 11.0625em; /* 177px */
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3em; /* 48px */
+    width: 37.6875em; /* 603px */
+    padding-left: var(--container-padding);
+    z-index: 2;
+  }
+
+  .hero__title {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    font-size: 4.25em; /* 68px */
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 0.35em; /* 24px gap to text (in title em) */
+  }
+
+  .hero__title-dark {
+    color: var(--color-heading);
+    line-height: 1;
+  }
+
+  .hero__title-red {
+    color: var(--color-primary);
+    line-height: 1.1;
+  }
+
+  /* Scribble under "за 1 ден" — rotated tall-thin vector, exactly as in Figma */
+  .hero__scribble {
+    position: absolute;
+    left: -0.36em; /* -24.52px in title em (68px) */
+    top: 1.655em; /* 112.58px */
+    width: 5.537em; /* 376.5px */
+    height: 1.303em; /* 88.6px */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .hero__scribble img {
+    width: 0.6575em; /* 44.71px */
+    height: 5.498em; /* 373.85px */
+    max-width: none;
+    transform: rotate(83.21deg);
+    flex: none;
+  }
+
+  .hero__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75em; /* 12px */
+  }
+
+  .hero__lead {
+    font-size: 1.5em; /* 24px */
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--color-heading);
+  }
+
+  .hero__subtext {
+    font-size: 1.125em; /* 18px */
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+  }
+
+  .hero__cta {
+    width: 100%;
+  }
+
+  /* --- Decorative cluster (team photo, ellipse, arrow, badge, sparkles) --- */
+  .hero__decor {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .hero__ellipse {
+    position: absolute;
+    left: 40.75em;  /* 652px */
+    top: 17.0625em; /* 273px */
+    width: 14.25em; /* 228px */
+    height: 13.25em; /* 212px */
+  }
+
+  .hero__ellipse img {
+    position: absolute;
+    inset: -47% -44%;
+    width: 188%;
+    max-width: none;
+    height: 194%;
+  }
+
+  .hero__team {
+    position: absolute;
+    left: 39.75em;   /* 636px */
+    top: 14.375em;   /* 230px */
+    width: 21.125em; /* 338px */
+    height: 22.625em; /* 362px */
+    overflow: hidden;
+  }
+
+  .hero__team img {
+    position: absolute;
+    height: 215.85%;
+    width: 821.1%;
+    max-width: none;
+    left: -253.44%;
+    top: -63.17%;
+  }
+
+  .hero__arrow {
+    position: absolute;
+    left: 39.84em; /* 637.44px */
+    top: 19.5em;   /* 311.95px */
+    width: 7.3875em;
+    height: 7.7762em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero__arrow img {
+    width: 6.077em; /* 97.24px */
+    height: auto;
+    flex: none;
+    transform: rotate(-119.43deg) scaleY(-1);
+  }
+
+  .hero__badge {
+    position: absolute;
+    left: 37.6875em; /* 603px */
+    top: 16.9375em;  /* 271px */
+    padding: 0.625em;
+    width: 7.8em; /* 105px text + padding */
+    font-size: 0.875em; /* 14px */
+    font-weight: 500;
+    line-height: 1.11;
+    text-align: center;
+    color: var(--color-primary);
+    border-radius: 0.42em;
+    border-width: 0.5px;
+    box-shadow: 0 0.5em 1em rgba(169, 8, 49, 0.19);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+  }
+
+  .hero__sparkles {
+    position: absolute;
+    left: 45.8125em; /* 733px */
+    top: 14.8125em;  /* 237px */
+    width: 4.125em;  /* 66px */
+  }
+
+  /* ======================================================================
+     Tablet & below — stacked layout per the 360 mobile frame (3253:8889)
+     ====================================================================== */
+  @media screen and (max-width: 991px) {
+    .hero {
+      height: auto;
+      min-height: 47.25em; /* 756px in the mobile design */
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero__bg-photo {
+      top: auto;
+      height: 42%;
+      bottom: 0;
+      object-position: 42% bottom;
+    }
+
+    .hero__bg-gradient {
+      background: linear-gradient(181deg, #a5c4d6 10.1%, #fcebec 57.6%, rgba(252, 235, 236, 0.78) 58.8%, rgba(252, 235, 236, 0) 75.7%);
+    }
+
+    .hero__bg-fade {
+      display: none;
+    }
+
+    .nav {
+      position: relative;
+      width: 100%;
+      height: auto;
+      padding-top: 1em;
+    }
+
+    .nav__links,
+    .nav__cta {
+      display: none;
+    }
+
+    .nav__burger {
+      display: inline-flex;
+    }
+
+    .nav__logo img {
+      height: 1.42em; /* ~23px at 360 */
+    }
+
+    .hero__inner {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      height: auto;
+      padding: 2.25em var(--container-padding) 3.5em;
+    }
+
+    .hero__content {
+      position: static;
+      width: 100%;
+      max-width: 32em;
+      padding-left: 0;
+      gap: 2em; /* 32px */
+    }
+
+    .hero__title {
+      font-size: 2.25em; /* 36px */
+      margin-bottom: 0.33em; /* 12px */
+    }
+
+    .hero__scribble {
+      left: -0.19em; /* -7px at 36px em */
+      top: 1.69em;   /* 61px */
+      width: 5.62em; /* 202px */
+      height: 1.32em;
+    }
+
+    .hero__lead {
+      font-size: 1.25em; /* 20px */
+      line-height: 1.2;
+    }
+
+    .hero__subtext {
+      font-size: 0.875em; /* 14px */
+    }
+
+    /* Decor cluster sits in the photo area at the bottom-left of the hero */
+    .hero__decor {
+      position: relative;
+      inset: auto;
+      height: 14.5em;
+      margin-top: 1em;
+    }
+
+    .hero__ellipse {
+      left: 2.43em;  /* 38.93px */
+      top: 0.84em;
+      width: 6.09em; /* 97.4px */
+      height: 5.66em;
+    }
+
+    .hero__team {
+      left: 2.13em;  /* 34px */
+      top: 0;
+      width: 8.58em; /* 137.2px */
+      height: 9.19em; /* 147px */
+    }
+
+    .hero__arrow {
+      left: 2.13em;
+      top: 2.69em;
+      width: 3.16em;
+      height: 3.32em;
+    }
+
+    .hero__arrow img {
+      width: 2.6em;
+    }
+
+    .hero__badge {
+      left: 0;
+      top: 1.7em; /* relative to decor block */
+      width: 5.07em; /* 71px at 10px font… */
+      font-size: 0.625em; /* 10px */
+      padding: 0.43em;
+      border-radius: 0.29em;
+    }
+
+    .hero__sparkles {
+      left: 4.56em; /* 73px */
+      top: -0.1em;
+      width: 1.76em; /* 28.2px */
+    }
+  }
+</style>

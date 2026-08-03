@@ -1,0 +1,169 @@
+---
+// "За кого е подходящ Демо денят?" — light card with bullet list + graph visual (Figma 3253:8698 / 3253:9295).
+const bullets = [
+  { icon: "icon-career.svg", text: "Ако обмисляш смяна на кариерата" },
+  { icon: "icon-income.svg", text: "Ако искаш по-високи доходи" },
+  { icon: "icon-buildings.svg", text: "Ако никога не си бил брокер" },
+  { icon: "icon-experience.svg", text: "Ако вече имаш опит и търсиш по-добра компания" },
+  { icon: "icon-curious.svg", text: "Ако просто си любопитен как изглежда работата" },
+];
+---
+
+<section class="who" id="za-kogo" aria-labelledby="who-title">
+  <div class="who__inner container container--padded">
+    <div class="who__card">
+      <div class="who__content">
+        <div class="who__header">
+          <span class="eyebrow-line" aria-hidden="true"></span>
+          <h2 class="who__title" id="who-title">За кого е подходящ Демо денят?</h2>
+        </div>
+
+        <ul class="who__bullets">
+          {bullets.map((b) => (
+            <li class="who__bullet">
+              <img src={`/assets/icons/${b.icon}`} alt="" width="28" height="28" loading="lazy" />
+              <p class="who__bullet-text">{b.text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="who__media">
+        <picture>
+          <source media="(max-width: 991px)" srcset="/assets/images/graph-card-mobile.png" />
+          <img
+            src="/assets/images/graph-card.png"
+            alt="Графика на растеж с логото на Home2U"
+            width="1126"
+            height="1064"
+            loading="lazy"
+          />
+        </picture>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .who {
+    width: 100%;
+  }
+
+  .who__inner {
+    padding-top: 5em;    /* 80px */
+    padding-bottom: 5em;
+  }
+
+  .who__card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3em;
+    padding: 3em; /* 48px */
+    background: var(--color-bg-light);
+    border: 1px solid var(--color-border-blue);
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+  }
+
+  .who__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2.625em; /* 42px */
+    width: 32.5em; /* 520px */
+    flex-shrink: 0;
+  }
+
+  .who__header {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25em; /* 20px */
+  }
+
+  .who__title {
+    font-size: 2.625em; /* 42px */
+    font-weight: 500;
+    line-height: 1.19; /* 50px */
+    color: #000000;
+  }
+
+  .who__bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25em; /* 20px */
+  }
+
+  .who__bullet {
+    display: flex;
+    align-items: center;
+    gap: 1em; /* 16px */
+  }
+
+  .who__bullet img {
+    width: 1.75em; /* 28px */
+    height: 1.75em;
+    flex-shrink: 0;
+  }
+
+  .who__bullet-text {
+    font-size: 1.375em; /* 22px */
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+  }
+
+  .who__media {
+    flex: 1;
+    min-width: 0;
+    max-width: 35.16em; /* 562.5px */
+  }
+
+  .who__media img {
+    width: 100%;
+    height: auto;
+    border-radius: 2.04em; /* 32.7px */
+  }
+
+  /* ---------------------------------------------------------------- */
+  @media screen and (max-width: 991px) {
+    .who__inner {
+      padding-top: 3.5em;    /* 56px */
+      padding-bottom: 3.5em;
+    }
+
+    .who__card {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 2.25em; /* 36px */
+      padding: 2em 1.5em 1.5em; /* 32/24/24px */
+      border: none;
+      border-radius: 1em; /* 16px */
+    }
+
+    .who__content {
+      width: 100%;
+      gap: 1.5em; /* 24px */
+    }
+
+    .who__title {
+      font-size: 1.75em; /* 28px */
+      line-height: 1.3;
+    }
+
+    .who__bullet {
+      gap: 0.75em; /* 12px */
+    }
+
+    .who__bullet-text {
+      font-size: 1em; /* 16px */
+    }
+
+    .who__media {
+      max-width: none;
+    }
+
+    .who__media img {
+      border-radius: 1.16em; /* 18.6px */
+    }
+  }
+</style>

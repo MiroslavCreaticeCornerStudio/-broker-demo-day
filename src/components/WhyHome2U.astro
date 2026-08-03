@@ -1,0 +1,191 @@
+---
+// "Защо Home2U?" — office photo + четири статистики (Figma 3253:8753 / 3253:9385).
+const stats = [
+  { label: "Инвестиции в технологии и обучение", value: "1 500 000 €" },
+  { label: "Опит на пазара", value: "18 години" },
+  { label: "Реализирани сделки", value: "15 000+" },
+  { label: "Професионалисти в екипа", value: "300+" },
+];
+---
+
+<section class="why" id="za-nas" aria-labelledby="why-title">
+  <div class="why__inner container container--padded">
+    <div class="why__grid">
+      <div class="why__media">
+        <img class="why__photo-base" src="/assets/images/office-1.jpg" alt="" width="1600" height="1067" loading="lazy" />
+        <img
+          class="why__photo-overlay"
+          src="/assets/images/office-2.jpg"
+          alt="Екипът на Home2U пред офиса на компанията"
+          width="1600"
+          height="1000"
+          loading="lazy"
+        />
+      </div>
+
+      <div class="why__content">
+        <div class="why__header">
+          <span class="eyebrow-line" aria-hidden="true"></span>
+          <h2 class="why__title" id="why-title">Защо Home2U?</h2>
+        </div>
+
+        <dl class="why__stats">
+          {stats.map((stat) => (
+            <div class="why__stat">
+              <dt class="why__stat-label">{stat.label}</dt>
+              <dd class="why__stat-value">{stat.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .why {
+    width: 100%;
+  }
+
+  .why__inner {
+    padding-top: 5em;    /* 80px */
+    padding-bottom: 5em;
+  }
+
+  .why__grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4.1875em; /* 67px */
+  }
+
+  .why__media {
+    position: relative;
+    width: 39.375em;  /* 630px */
+    height: 34.5em;   /* 552px */
+    flex-shrink: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: #bb2c2c;
+  }
+
+  .why__photo-base {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .why__photo-overlay {
+    position: absolute;
+    height: 106.07%;
+    width: 148.71%;
+    max-width: none;
+    left: -29.84%;
+    top: 1.18%;
+    object-fit: cover;
+  }
+
+  .why__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-self: stretch;
+    gap: 2.5em;
+    width: 36.4375em; /* 583px */
+    flex-shrink: 0;
+  }
+
+  .why__header {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25em; /* 20px */
+  }
+
+  .why__title {
+    font-size: 3em; /* 48px */
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--color-heading);
+  }
+
+  .why__stats {
+    display: flex;
+    flex-direction: column;
+    gap: 2.25em; /* 36px */
+  }
+
+  .why__stat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+    padding-block: 0.5em; /* 8px */
+    border-bottom: 1px solid var(--color-border-soft);
+  }
+
+  .why__stat-label {
+    font-size: 1.125em; /* 18px */
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--color-text-secondary);
+    max-width: 18.2em; /* 291px on the first, harmless on the rest */
+  }
+
+  .why__stat-value {
+    font-size: 2em; /* 32px */
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--color-primary);
+    white-space: nowrap;
+  }
+
+  /* ---------------------------------------------------------------- */
+  @media screen and (max-width: 991px) {
+    .why__inner {
+      padding-top: 3.5em;    /* 56px */
+      padding-bottom: 3.5em;
+    }
+
+    .why__grid {
+      flex-direction: column-reverse; /* text first, photo below (mobile design) */
+      gap: 3.5em; /* 56px */
+      align-items: stretch;
+    }
+
+    .why__media {
+      width: 100%;
+      height: 17.5em; /* 280px */
+      border-radius: 0.76em; /* 12.2px */
+    }
+
+    .why__content {
+      width: 100%;
+      gap: 2.9375em; /* 47px */
+    }
+
+    .why__title {
+      font-size: 1.875em; /* 30px */
+    }
+
+    .why__stats {
+      gap: 1.25em; /* 20px */
+    }
+
+    .why__stat {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75em; /* 12px */
+    }
+
+    .why__stat-label {
+      font-size: 1em; /* 16px */
+      max-width: none;
+    }
+
+    .why__stat-value {
+      font-size: 1.75em; /* 28px */
+    }
+  }
+</style>

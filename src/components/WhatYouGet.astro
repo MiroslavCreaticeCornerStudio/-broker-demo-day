@@ -1,0 +1,172 @@
+---
+// "Какво ще преживееш?" — heading column + six frosted info cards (Figma 3253:8664 / 3253:8977).
+const items = [
+  { icon: "icon-office.svg", text: "Ще разгледаш офиса и ще се запознаеш с екипа" },
+  { icon: "icon-meeting.svg", text: "Ще присъстваш на реална работна среща" },
+  { icon: "icon-broker.svg", text: "Ще видиш как работи успешен брокер" },
+  { icon: "icon-training.svg", text: "Ще разбереш как изглежда обучението" },
+  { icon: "icon-deals.svg", text: "Ще научиш как се печелят първите сделки" },
+  { icon: "icon-questions.svg", text: "Ще зададеш всички въпроси, които те интересуват" },
+];
+---
+
+<section class="experience" id="prezhivyavane" aria-labelledby="experience-title">
+  <div class="experience__inner container container--padded">
+    <span class="experience__blob" aria-hidden="true">
+      <img src="/assets/images/blob-decor.svg" alt="" width="892" height="614" loading="lazy" />
+    </span>
+
+    <div class="experience__header">
+      <span class="eyebrow-line" aria-hidden="true"></span>
+      <h2 class="experience__title" id="experience-title">Какво ще преживееш?</h2>
+    </div>
+
+    <ul class="experience__cards">
+      {items.map((item) => (
+        <li class="experience__card glass-card">
+          <span class="experience__icon">
+            <img src={`/assets/icons/${item.icon}`} alt="" width="32" height="32" loading="lazy" />
+          </span>
+          <p class="experience__text">{item.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .experience {
+    position: relative;
+    width: 100%;
+  }
+
+  .experience__inner {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    gap: 2em;
+    padding-top: 5.25em;    /* 84px */
+    padding-bottom: 5.25em;
+  }
+
+  .experience__blob {
+    position: absolute;
+    left: -10.875em; /* -174px */
+    top: 2.3125em;   /* 37px */
+    width: 55.75em;  /* 892px */
+    height: 38.375em;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .experience__blob img {
+    position: absolute;
+    inset: -26.55% -14.24% -22.15% -12.11%;
+    width: 126%;
+    height: 149%;
+    max-width: none;
+  }
+
+  .experience__header {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25em; /* 20px */
+    width: 31.125em; /* 498px */
+    flex-shrink: 0;
+    align-self: flex-start;
+  }
+
+  .experience__title {
+    font-size: 2.625em; /* 42px */
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--color-heading);
+  }
+
+  .experience__cards {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75em; /* 12px */
+    width: 40.375em; /* 646px */
+    flex-shrink: 0;
+  }
+
+  .experience__card {
+    display: flex;
+    align-items: center;
+    gap: 1em; /* 16px */
+    padding: 1em;
+  }
+
+  .experience__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625em; /* 10px */
+    background: var(--color-bg-white);
+    border-radius: 0.555em; /* 8.9px */
+    flex-shrink: 0;
+  }
+
+  .experience__icon img {
+    width: 2em; /* 32px */
+    height: 2em;
+  }
+
+  .experience__text {
+    font-size: 1.125em; /* 18px */
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+  }
+
+  /* ---------------------------------------------------------------- */
+  @media screen and (max-width: 991px) {
+    .experience__inner {
+      flex-direction: column;
+      gap: 2.25em; /* 36px */
+      padding-top: 3.5em;    /* 56px */
+      padding-bottom: 2.25em; /* 36px */
+    }
+
+    .experience__blob {
+      left: -9.6em;
+      top: -4.5em;
+      width: 35em;
+      height: 24em;
+    }
+
+    .experience__header,
+    .experience__cards {
+      width: 100%;
+    }
+
+    .experience__title {
+      font-size: 1.75em; /* 28px */
+    }
+
+    .experience__card {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 1em;
+    }
+
+    .experience__icon {
+      padding: 0.5em;
+    }
+
+    .experience__icon img {
+      width: 1.6em; /* ~25.8px */
+      height: 1.6em;
+    }
+
+    .experience__text {
+      font-size: 1em; /* 16px */
+    }
+  }
+</style>

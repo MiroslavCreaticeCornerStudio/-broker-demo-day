@@ -1,0 +1,188 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Footer from "../components/Footer.astro";
+
+export interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <header class="page-header">
+    <div class="page-header__inner container container--padded">
+      <a class="page-header__logo" href="/" aria-label="Home2U начало">
+        <img src="/assets/icons/logo-icon.svg" alt="" width="35" height="35" />
+        <img src="/assets/icons/logo-text.svg" alt="Home2U" width="145" height="35" />
+      </a>
+      <a class="page-header__back" href="/">← Към началото</a>
+    </div>
+  </header>
+
+  <main id="main" class="legal">
+    <article class="legal__inner container container--padded">
+      <slot />
+    </article>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<!-- is:global so the styles reach the slotted content (loaded only on legal pages) -->
+<style is:global>
+  .page-header {
+    width: 100%;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg-white);
+  }
+
+  .page-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5em;
+    padding-top: 1.25em;
+    padding-bottom: 1.25em;
+  }
+
+  .page-header__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+
+  .page-header__logo img {
+    height: 2.2em;
+    width: auto;
+  }
+
+  .page-header__back {
+    font-size: 0.875em;
+    font-weight: 500;
+    color: var(--color-primary);
+    white-space: nowrap;
+  }
+
+  .page-header__back:hover {
+    text-decoration: underline;
+  }
+
+  /* Legal content */
+  .legal {
+    width: 100%;
+    background: var(--color-bg-white);
+  }
+
+  .legal__inner {
+    max-width: 52em; /* readable measure */
+    margin-inline: auto;
+    padding-top: 4em;
+    padding-bottom: 5em;
+  }
+
+  .legal__eyebrow {
+    display: block;
+    width: 2.5em;
+    height: 2px;
+    margin-bottom: 1.25em;
+    background-color: var(--color-primary);
+  }
+
+  .legal__title {
+    font-size: 2.5em; /* 40px */
+    font-weight: 500;
+    line-height: 1.2;
+    color: #1c1c1c;
+    margin-bottom: 1em;
+  }
+
+  .legal__lead {
+    font-size: 1.0625em;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #1c1c1c;
+    margin-bottom: 1.75em;
+  }
+
+  .legal p {
+    font-size: 1em;
+    line-height: 1.65;
+    color: var(--color-text-secondary);
+    margin-bottom: 1.25em;
+  }
+
+  .legal__heading {
+    font-size: 1.5em; /* 24px */
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--color-primary);
+    margin-top: 2em;
+    margin-bottom: 0.85em;
+  }
+
+  .legal__subheading {
+    font-size: 1.125em; /* 18px */
+    font-weight: 500;
+    line-height: 1.4;
+    color: #1c1c1c;
+    margin-top: 1.5em;
+    margin-bottom: 0.6em;
+  }
+
+  .legal__list {
+    margin: 0 0 1.5em;
+    padding-left: 1.5em;
+    list-style: disc;
+  }
+
+  .legal__list--ordered {
+    list-style: decimal;
+  }
+
+  .legal__list li {
+    line-height: 1.65;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.75em;
+  }
+
+  .legal__list li::marker {
+    color: var(--color-primary);
+  }
+
+  .legal__note {
+    color: #484848;
+    font-style: italic;
+  }
+
+  .legal__note--strong {
+    font-style: normal;
+    font-weight: 500;
+    color: #1c1c1c;
+  }
+
+  .legal a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    overflow-wrap: break-word;
+  }
+
+  .legal__download {
+    font-weight: 500;
+  }
+
+  @media (max-width: 767px) {
+    .legal__inner {
+      padding-top: 2.5em;
+      padding-bottom: 3em;
+    }
+
+    .legal__title {
+      font-size: 2em;
+    }
+
+    .legal__heading {
+      font-size: 1.3em;
+    }
+  }
+</style>

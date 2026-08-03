@@ -1,0 +1,70 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Благодарим ти! | Стани брокер за 1 ден | Home2U"
+  description="Получихме твоята заявка за Демо деня на Home2U. Ще се свържем с теб съвсем скоро."
+>
+  <main id="main" class="thanks">
+    <div class="thanks__card glass-card">
+      <a class="thanks__logo" href="/" aria-label="Home2U — начало">
+        <img src="/assets/icons/logo-icon.svg" alt="" width="35" height="35" />
+        <img src="/assets/icons/logo-text.svg" alt="Home2U" width="145" height="35" />
+      </a>
+      <h1 class="thanks__title">Благодарим ти!</h1>
+      <p class="thanks__text">
+        Получихме твоята заявка за Демо деня. Екипът на Home2U ще се свърже с
+        теб съвсем скоро, за да уточните детайлите.
+      </p>
+      <a class="btn" href="/">Обратно към сайта</a>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .thanks {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: var(--container-padding);
+    background: var(--gradient-cta-bg);
+  }
+
+  .thanks__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5em;
+    max-width: 36em;
+    padding: 3.5em 3em;
+    text-align: center;
+    border-radius: var(--radius-xl);
+    background: linear-gradient(270deg, rgba(255, 255, 255, 0.42) 1.76%, rgba(255, 255, 255, 0.7) 98.47%);
+  }
+
+  .thanks__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65em;
+  }
+
+  .thanks__logo img {
+    height: 2.1875em;
+    width: auto;
+  }
+
+  .thanks__title {
+    font-size: 2.625em;
+    font-weight: 500;
+    color: var(--color-heading);
+  }
+
+  .thanks__text {
+    font-size: 1.125em;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+  }
+</style>

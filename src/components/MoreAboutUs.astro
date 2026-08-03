@@ -1,0 +1,124 @@
+---
+// Три предимства с икони и вертикални разделители (Figma 3253:8773 / 3253:9488).
+const benefits = [
+  { icon: "icon-clients.svg", text: "Работа с реални клиенти още по време на обучението." },
+  { icon: "icon-budget.svg", text: "Най-големият рекламен бюджет в индустрията." },
+  { icon: "icon-education.svg", text: "Собствена обучителна система" },
+];
+---
+
+<section class="benefits" aria-label="Предимства на Home2U">
+  <div class="benefits__inner container container--padded">
+    <ul class="benefits__row">
+      {benefits.map((benefit, i) => (
+        <>
+          {i > 0 && (
+            <li class="benefits__divider" aria-hidden="true">
+              <img src="/assets/icons/divider-line.svg" alt="" width="108" height="2" loading="lazy" />
+            </li>
+          )}
+          <li class="benefits__item">
+            <span class="benefits__icon">
+              <img src={`/assets/icons/${benefit.icon}`} alt="" width="32" height="32" loading="lazy" />
+            </span>
+            <p class="benefits__text">{benefit.text}</p>
+          </li>
+        </>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .benefits {
+    width: 100%;
+  }
+
+  .benefits__inner {
+    padding-top: 1.25em;  /* 20px */
+    padding-bottom: 5em;  /* 80px */
+  }
+
+  .benefits__row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3.5em; /* 56px */
+  }
+
+  .benefits__item {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5em; /* 24px */
+    min-width: 0;
+  }
+
+  .benefits__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75em; /* 12px */
+    background: var(--color-bg-white);
+    border-radius: 0.6875em; /* 11px */
+  }
+
+  .benefits__icon img {
+    width: 2em; /* 32px */
+    height: 2em;
+  }
+
+  .benefits__text {
+    font-size: 1.375em; /* 22px */
+    font-weight: 500;
+    line-height: 1.5;
+    text-align: center;
+    color: var(--color-primary);
+  }
+
+  .benefits__divider {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 6.75em; /* 108px */
+  }
+
+  .benefits__divider img {
+    width: 6.75em;
+    max-width: none;
+    transform: rotate(90deg);
+  }
+
+  /* ---------------------------------------------------------------- */
+  @media screen and (max-width: 991px) {
+    .benefits__inner {
+      padding-top: 3.5em;    /* 56px */
+      padding-bottom: 3.5em;
+      padding-inline: 2.625em; /* 42px */
+    }
+
+    .benefits__row {
+      flex-direction: column;
+      gap: 1.5em; /* 24px */
+    }
+
+    .benefits__item {
+      width: 100%;
+      flex: none;
+    }
+
+    .benefits__text {
+      font-size: 1.25em; /* 20px */
+    }
+
+    .benefits__divider {
+      height: auto;
+    }
+
+    .benefits__divider img {
+      transform: none;
+    }
+  }
+</style>
