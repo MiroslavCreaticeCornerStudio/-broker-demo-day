@@ -530,11 +530,11 @@ const navLinks = [
       height: 5.66em;
     }
 
+    /* The mini photo crop can't stay pixel-aligned with the fluid cover
+       background across phone widths — the background cutout already shows
+       the empty chair, so the duplicate crop is dropped on mobile. */
     .hero__team {
-      left: 2.13em;  /* 34px */
-      top: 0;
-      width: 8.58em; /* 137.2px */
-      height: 9.19em; /* 147px */
+      display: none;
     }
 
     .hero__arrow {
