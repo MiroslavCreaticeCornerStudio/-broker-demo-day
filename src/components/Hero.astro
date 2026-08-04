@@ -141,13 +141,20 @@ const navLinks = [
     pointer-events: none;
   }
 
+  /* The photo is anchored to the centered container exactly like the Figma
+     crop (width 193.61% of the 1440 frame, offset −15.77%), NOT to the
+     viewport — so the empty chair stays under the badge/arrow cluster at any
+     screen width. Beyond ~1894px the image's left edge no longer reaches the
+     viewport edge; the opaque blue start of the gradient overlay covers it. */
   .hero__bg-photo {
     position: absolute;
-    inset: 0;
-    width: 100%;
+    top: 0;
     height: 100%;
+    left: calc(50% - var(--size-container) * 0.6577);
+    width: calc(var(--size-container) * 1.9361);
+    max-width: none;
     object-fit: cover;
-    object-position: 16% top;
+    object-position: center top;
   }
 
   .hero__bg-gradient {
@@ -444,6 +451,8 @@ const navLinks = [
     }
 
     .hero__bg-photo {
+      left: 0;
+      width: 100%;
       top: auto;
       height: 42%;
       bottom: 0;
