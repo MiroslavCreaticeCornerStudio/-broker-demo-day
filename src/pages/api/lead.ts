@@ -3,7 +3,7 @@ import type { APIRoute } from 'astro';
 export const prerender = false;
 
 const CRM_ENDPOINT = import.meta.env.CRM_ENDPOINT || 'https://skyguru.ai/api/v1/public/leads';
-const CRM_FORM_NAME = import.meta.env.CRM_FORM_NAME || 'Брокер за 1 ден';
+const CRM_FORM_NAME = import.meta.env.CRM_FORM_NAME || 'Broker For a day';
 
 /**
  * Receives the "Запази място" form and forwards it to SkyGuru CRM

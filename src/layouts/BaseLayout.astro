@@ -72,7 +72,7 @@ const ogImageURL = new URL(ogImage, Astro.site ?? Astro.url).href;
       (function () {
         try {
           var KEY = "h2u_attribution";
-          var TRACKED = ["fbclid", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
+          var TRACKED = ["fbclid", "gclid", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
           var params = new URLSearchParams(location.search);
           var hasNew = TRACKED.some(function (p) { return params.get(p); });
 
