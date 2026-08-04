@@ -10,9 +10,27 @@ const navLinks = [
 
 <header class="hero" id="top">
   <div class="hero__bg" aria-hidden="true">
-    <img class="hero__bg-photo hero__bg-photo--a" src="/assets/images/hero-bg-a.jpg" alt="" width="3580" height="1008" fetchpriority="high" />
+    <img
+      class="hero__bg-photo hero__bg-photo--a"
+      src="/assets/images/hero-bg-a.webp"
+      srcset="/assets/images/hero-bg-a-1800.webp 1800w, /assets/images/hero-bg-a.webp 3580w"
+      sizes="(max-width: 991px) 314vw, 194vw"
+      alt=""
+      width="3580"
+      height="1008"
+      fetchpriority="high"
+    />
     <div class="hero__bg-gradient"></div>
-    <img class="hero__bg-photo hero__bg-photo--b" src="/assets/images/hero-bg-b.png" alt="" width="2800" height="788" fetchpriority="high" />
+    <img
+      class="hero__bg-photo hero__bg-photo--b"
+      src="/assets/images/hero-bg-b.webp"
+      srcset="/assets/images/hero-bg-b-1800.webp 1800w, /assets/images/hero-bg-b.webp 3580w"
+      sizes="(max-width: 991px) 314vw, 194vw"
+      alt=""
+      width="3580"
+      height="1008"
+      fetchpriority="high"
+    />
     <div class="hero__bg-fade"></div>
   </div>
 
@@ -388,18 +406,21 @@ const navLinks = [
 
   .hero__badge {
     position: absolute;
-    left: 37.6875em; /* 603px */
-    top: 16.9375em;  /* 271px */
-    padding: 0.625em;
-    width: 7.8em; /* 105px text + padding */
+    /* Nested in the middle of the decor cluster: sparkles above-right, arrow
+       below, chair ellipse to the right (Figma 603, 271). Offsets are in the
+       badge's own 14px em, so design px ÷ 14. */
+    left: 43.07em; /* 603px */
+    top: 19.36em;  /* 271px */
+    padding: 0.714em; /* 10px */
+    width: 8.93em; /* 125px — 105px text + padding */
     font-size: 0.875em; /* 14px */
     font-weight: 500;
     line-height: 1.11;
     text-align: center;
     color: var(--color-primary);
-    border-radius: 0.42em;
+    border-radius: 0.482em; /* 6.75px */
     border-width: 0.5px;
-    box-shadow: 0 0.5em 1em rgba(169, 8, 49, 0.19);
+    box-shadow: 0 0.57em 1.14em rgba(169, 8, 49, 0.19);
     -webkit-backdrop-filter: blur(2px);
     backdrop-filter: blur(2px);
   }
@@ -529,8 +550,8 @@ const navLinks = [
 
     .hero__badge {
       left: 0;
-      top: 1.7em; /* relative to decor block */
-      width: 5.07em; /* 71px at 10px font… */
+      top: 1.7em; /* 17px, relative to decor block */
+      width: 7.1em; /* 71px at the badge's 10px em */
       font-size: 0.625em; /* 10px */
       padding: 0.43em;
       border-radius: 0.29em;
