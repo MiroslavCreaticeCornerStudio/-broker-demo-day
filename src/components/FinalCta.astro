@@ -51,6 +51,15 @@
             <label class="final-cta__label" for="lead-message">Какво ви мотивира да опитате професията брокер за един ден?</label>
             <textarea class="final-cta__input final-cta__textarea" id="lead-message" name="message" placeholder="Вашето съобщение"></textarea>
           </div>
+          <div class="final-cta__field">
+            <label class="final-cta__label" for="lead-photo">Прикачи снимка<span aria-hidden="true">*</span></label>
+            <input class="final-cta__file-input" type="file" id="lead-photo" name="photo" accept="image/*" required aria-describedby="lead-photo-error" />
+            <label class="final-cta__file" for="lead-photo">
+              <span class="final-cta__file-btn">Избери файл</span>
+              <span class="final-cta__file-name">Няма избран файл</span>
+            </label>
+            <p class="final-cta__error" id="lead-photo-error" hidden></p>
+          </div>
         </div>
 
         <div class="final-cta__consent">
@@ -103,6 +112,29 @@
       return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? null : "Моля, въведи валиден имейл адрес.";
     });
 
+    // Задължителна снимка — проверява се файлът, не текстовата стойност
+    const photoInput = form.querySelector<HTMLInputElement>("#lead-photo");
+    const photoError = form.querySelector<HTMLElement>("#lead-photo-error");
+    const photoName = form.querySelector<HTMLElement>(".final-cta__file-name");
+    const MAX_PHOTO_MB = 10;
+    const checkPhoto = (): string | null => {
+      const file = photoInput?.files?.[0];
+      if (!file) return "Моля, прикачи снимка.";
+      if (!file.type.startsWith("image/")) return "Файлът трябва да е изображение (JPG, PNG…).";
+      if (file.size > MAX_PHOTO_MB * 1024 * 1024) return `Снимката трябва да е до ${MAX_PHOTO_MB} MB.`;
+      return null;
+    };
+    if (photoInput && photoError) {
+      rules.push({
+        input: photoInput,
+        error: photoError,
+        check: () => checkPhoto(),
+      });
+      photoInput.addEventListener("change", () => {
+        if (photoName) photoName.textContent = photoInput.files?.[0]?.name || "Няма избран файл";
+      });
+    }
+
     const setError = (rule: Rule, message: string | null) => {
       rule.error.textContent = message ?? "";
       rule.error.hidden = !message;
@@ -111,9 +143,12 @@
     };
 
     rules.forEach((rule) => {
-      rule.input.addEventListener("input", () => setError(rule, null));
+      const clearEvent = rule.input.type === "file" ? "change" : "input";
+      rule.input.addEventListener(clearEvent, () => setError(rule, null));
       rule.input.addEventListener("blur", () => {
-        if (rule.input.value.trim()) setError(rule, rule.check(rule.input.value.trim()));
+        if (rule.input.type !== "file" && rule.input.value.trim()) {
+          setError(rule, rule.check(rule.input.value.trim()));
+        }
       });
     });
 
@@ -131,11 +166,17 @@
         return;
       }
 
-      const data = new FormData(form);
       let attribution: Record<string, string> = {};
       try {
         attribution = JSON.parse(localStorage.getItem("h2u_attribution") || "{}");
       } catch {}
+
+      // multipart — снимката пътува като файл, останалото като полета
+      const data = new FormData(form);
+      data.set("page", location.href);
+      for (const [key, value] of Object.entries(attribution)) {
+        if (typeof value === "string" && value && !data.has(key)) data.set(key, value);
+      }
 
       if (submit) {
         submit.disabled = true;
@@ -144,18 +185,7 @@
       if (status) status.hidden = true;
 
       try {
-        const res = await fetch("/api/lead", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: data.get("name"),
-            phone: data.get("phone"),
-            email: data.get("email"),
-            message: data.get("message"),
-            page: location.href,
-            ...attribution,
-          }),
-        });
+        const res = await fetch("/api/lead", { method: "POST", body: data });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         location.assign("/thank-you");
       } catch {
@@ -324,6 +354,61 @@
   }
 
   .final-cta__input--error {
+    box-shadow: inset 0 0 0 1px var(--color-primary);
+  }
+
+  /* --- File upload (снимка) --- */
+  .final-cta__file-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .final-cta__file {
+    display: flex;
+    align-items: center;
+    gap: 0.75em;
+    width: 100%;
+    padding: 0.4375em; /* 7px — visually matches the 14px-padded inputs */
+    padding-right: 1em;
+    background: var(--color-bg-white);
+    border-radius: 1.5em; /* 24px */
+    cursor: pointer;
+  }
+
+  .final-cta__file-btn {
+    flex-shrink: 0;
+    padding: 0.5em 1.25em;
+    background: var(--color-bg-light);
+    border-radius: 1.5em;
+    font-size: 0.875em; /* 14px */
+    font-weight: 500;
+    color: var(--color-primary);
+    white-space: nowrap;
+    transition: background-color var(--transition-base);
+  }
+
+  .final-cta__file:hover .final-cta__file-btn {
+    background: #e9e9eb;
+  }
+
+  .final-cta__file-name {
+    font-size: 0.875em; /* 14px */
+    color: var(--color-text-inactive);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .final-cta__file-input:focus-visible ~ .final-cta__file {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .final-cta__file-input.final-cta__input--error ~ .final-cta__file {
     box-shadow: inset 0 0 0 1px var(--color-primary);
   }
 
