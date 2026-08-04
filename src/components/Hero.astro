@@ -523,10 +523,13 @@ const navLinks = [
       margin-top: 1em;
     }
 
+    /* The cluster is anchored onto the empty chair of the fluid cover
+       background — its center measures (3.77em, 7.3em) in decor coordinates
+       at portrait widths; offsets keep the Figma spatial relationships. */
     .hero__ellipse {
-      left: 2.43em;  /* 38.93px */
-      top: 0.84em;
-      width: 6.09em; /* 97.4px */
+      left: -0.2em; /* glow centered on the chair */
+      top: 3.53em;
+      width: 6.09em;
       height: 5.66em;
     }
 
@@ -538,8 +541,8 @@ const navLinks = [
     }
 
     .hero__arrow {
-      left: 2.13em;
-      top: 2.69em;
+      left: 0.2em;  /* curls from under the badge to the chair seat */
+      top: 5.39em;
       width: 3.16em;
       height: 3.32em;
     }
@@ -550,7 +553,7 @@ const navLinks = [
 
     .hero__badge {
       left: 0;
-      top: 1.7em; /* 17px, relative to decor block */
+      top: 6.27em; /* 3.92em parent ÷ 0.625 font — upper-left of the chair */
       width: 7.1em; /* 71px at the badge's 10px em */
       font-size: 0.625em; /* 10px */
       padding: 0.43em;
@@ -558,9 +561,27 @@ const navLinks = [
     }
 
     .hero__sparkles {
-      left: 4.56em; /* 73px */
-      top: -0.1em;
-      width: 1.76em; /* 28.2px */
+      left: 1.95em; /* twinkle just above the chair back */
+      top: 2.62em;
+      width: 1.76em;
     }
+  }
+
+  /* The chair's decor-relative position differs per fluid-scaling bucket
+     (each redefines --size-container-ideal), so the cluster anchor shifts:
+     measured chair centers — ≤479: (3.77em, 7.3em); 480–767: (9em, 9.27em);
+     768–991: (16.2em, 9.27em). */
+  @media screen and (min-width: 480px) and (max-width: 767px) {
+    .hero__ellipse { left: 5.03em; top: 5.5em; }
+    .hero__arrow { left: 5.43em; top: 7.36em; }
+    .hero__badge { left: 8.37em; top: 9.42em; } /* parent em ÷ 0.625 font */
+    .hero__sparkles { left: 7.18em; top: 4.59em; }
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 991px) {
+    .hero__ellipse { left: 12.24em; top: 5.5em; }
+    .hero__arrow { left: 12.64em; top: 7.36em; }
+    .hero__badge { left: 19.9em; top: 9.42em; }
+    .hero__sparkles { left: 14.39em; top: 4.59em; }
   }
 </style>
