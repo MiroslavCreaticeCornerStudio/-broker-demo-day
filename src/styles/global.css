@@ -149,6 +149,15 @@ html {
   scroll-behavior: smooth;
 }
 
+/* The design frame clips horizontally — decorative bleeds (hero cluster,
+   experience blob, photo overlays) and sub-pixel rounding from the fluid em
+   system must never create sideways scroll. `clip` avoids making body a
+   scroll container (unlike `hidden`). */
+html,
+body {
+  overflow-x: clip;
+}
+
 body {
   font-family: var(--font-body);
   font-size: var(--size-font);
