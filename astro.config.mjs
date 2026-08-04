@@ -8,7 +8,7 @@ import vercel from '@astrojs/vercel';
 // The site is static apart from the on-demand `/api/lead` endpoint,
 // which runs as a Vercel serverless function.
 export default defineConfig({
-  site: process.env.SITE_URL || 'https://broker.home2u.bg',
+  site: process.env.SITE_URL || 'https://broker-demo-day.home2u.bg',
   output: 'static',
   adapter: vercel(),
   integrations: [

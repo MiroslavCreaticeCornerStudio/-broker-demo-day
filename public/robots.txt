@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /thank-you
 
-Sitemap: https://broker.home2u.bg/sitemap-index.xml
+Sitemap: https://broker-demo-day.home2u.bg/sitemap-index.xml
