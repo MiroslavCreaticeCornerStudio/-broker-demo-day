@@ -55,5 +55,5 @@ redirect `/thank-you`.
   `public/robots.txt` (sitemap URL)
 - Add GTM / Meta Pixel snippet in `BaseLayout.astro` if this campaign gets its
   own container (the Webinar project's pattern is already prepared for it)
-- Confirm the phone number `+359 887 88333222` and email `info@home2u.com`
-  (taken verbatim from the Figma frame)
+- Phone number confirmed by the client: `+359 875 363 333`; email
+  `info@home2u.com` is from the Figma frame

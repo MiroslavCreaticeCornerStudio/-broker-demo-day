@@ -7,6 +7,13 @@
       "runtimeArgs": ["run", "dev", "--", "--port", "4399"],
       "port": 4399,
       "autoPort": false
+    },
+    {
+      "name": "besold-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "../besold", "--", "--port", "4400"],
+      "port": 4400,
+      "autoPort": false
     }
   ]
 }
