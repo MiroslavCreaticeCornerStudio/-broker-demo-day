@@ -351,18 +351,26 @@ const navLinks = [
     width: 100%;
   }
 
-  /* --- Decorative cluster (team photo, ellipse, arrow, badge, sparkles) --- */
+  /* --- Decorative cluster (team photo, ellipse, arrow, badge, sparkles) ---
+     The cluster shares the photo's exact positioned box, with item offsets in
+     percentages of it — so the badge/arrow/glow track the empty chair in the
+     photograph no matter how scrollbars, display scaling or zoom shift the
+     viewport math. (% = Figma px offset by the photo crop: +15.77% of 1440,
+     over the 2788×785 drawn photo box.) */
   .hero__decor {
     position: absolute;
-    inset: 0;
+    top: 0;
+    height: 100%;
+    left: calc(50% - var(--size-container) * 0.6577);
+    width: calc(var(--size-container) * 1.9361);
     z-index: 1;
     pointer-events: none;
   }
 
   .hero__ellipse {
     position: absolute;
-    left: 40.75em;  /* 652px */
-    top: 17.0625em; /* 273px */
+    left: 31.53%;   /* 652px in the 1440 frame */
+    top: 34.78%;    /* 273px */
     width: 14.25em; /* 228px */
     height: 13.25em; /* 212px */
   }
@@ -377,8 +385,8 @@ const navLinks = [
 
   .hero__team {
     position: absolute;
-    left: 39.75em;   /* 636px */
-    top: 14.375em;   /* 230px */
+    left: 30.96%;    /* 636px */
+    top: 29.3%;      /* 230px */
     width: 21.125em; /* 338px */
     height: 22.625em; /* 362px */
     overflow: hidden;
@@ -395,8 +403,8 @@ const navLinks = [
 
   .hero__arrow {
     position: absolute;
-    left: 39.84em; /* 637.44px */
-    top: 19.5em;   /* 311.95px */
+    left: 31.01%; /* 637.44px */
+    top: 39.74%;  /* 311.95px */
     width: 7.3875em;
     height: 7.7762em;
     display: flex;
@@ -414,10 +422,10 @@ const navLinks = [
   .hero__badge {
     position: absolute;
     /* Nested in the middle of the decor cluster: sparkles above-right, arrow
-       below, chair ellipse to the right (Figma 603, 271). Offsets are in the
-       badge's own 14px em, so design px ÷ 14. */
-    left: 43.07em; /* 603px */
-    top: 19.36em;  /* 271px */
+       below, chair ellipse to the right (Figma 603, 271). Percentages of the
+       photo box are font-size-independent. */
+    left: 29.77%; /* 603px */
+    top: 34.52%;  /* 271px */
     padding: 0.714em; /* 10px */
     width: 8.93em; /* 125px — 105px text + padding */
     font-size: 0.875em; /* 14px */
@@ -434,9 +442,9 @@ const navLinks = [
 
   .hero__sparkles {
     position: absolute;
-    left: 45.8125em; /* 733px */
-    top: 14.8125em;  /* 237px */
-    width: 4.125em;  /* 66px */
+    left: 34.44%; /* 733px */
+    top: 30.19%;  /* 237px */
+    width: 4.125em; /* 66px */
   }
 
   /* ======================================================================
@@ -528,6 +536,7 @@ const navLinks = [
     .hero__decor {
       position: relative;
       inset: auto;
+      width: auto;
       height: 14.5em;
       margin-top: 1em;
     }
